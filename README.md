@@ -195,3 +195,14 @@ For issues, questions, or feature requests:
 **Made with ❤️ by fiber artists, for fiber artists.**
 
 Happy crocheting! 🧶
+
+Update
+
+### **Key Improvements**
+
+1.  **Beginner Mode Toggle:** In the sidebar, you can now select "Beginner". This fundamentally changes how the pattern instructions are displayed.[1]
+2.  **Interactive Explainers:** Instead of a dense block of text, Beginner Mode uses `st.expander` elements. Each core step of the pattern is a clickable header that reveals a simple explanation and a video tutorial for that specific concept.[2][3]
+3.  **New Glossary:** I've created a `GLOSSARY` at the top of the code. This contains simple, clear definitions for terms like "Foundation Chain", "Form a Ring", "Setup Round", and "Gauge". It's easy for you to add more terms to this dictionary in the future.[4][5][6][7]
+4.  **Context-Aware Instructions:** The tool now correctly differentiates between projects that are worked flat (like a blanket) and those worked in a ring (like a coaster), providing the right instructions for each.[8]
+
+Now, when you select "Coaster" and "Beginner," the instructions will be broken down into easy, digestible tutorials, making the process much more approachable for you and your family.
