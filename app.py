@@ -68,19 +68,41 @@ GLOSSARY = {
     }
 }
 
-# --- STITCH & PRESET DATABASES (from previous version) ---
+# --- STITCH & PRESET DATABASES ---
 STITCH_DATABASE = {
-    "Treble Mesh": {\"desc\": \"Creates a grid of open squares.\", \"abbr_uk\": \"tr, ch1, sk1\", \"abbr_us\": \"dc, ch1, sk1\", \"video\": \"https://www.youtube.com/embed/9g0s3qTqj1g\"},
-    "Granite Stitch": {\"desc\": \"Also known as Moss Stitch. Dense, woven texture.\", \"abbr_uk\": \"dc, ch1, sk1\", \"abbr_us\": \"sc, ch1, sk1\", \"video\": \"https://www.youtube.com/embed/gUa6tLpZsio\"},
-    "Double Crochet": {\"desc\": \"Standard solid fabric.\", \"abbr_uk\": \"tr\", \"abbr_us\": \"dc\", \"video\": \"https://www.youtube.com/embed/5wTgbdMs-bg\"},
-    "Granny Cluster": {\"desc\": \"Classic 3-stitch groups.\", \"abbr_uk\": \"3tr group\", \"abbr_us\": \"3dc group\", \"video\": \"https://www.youtube.com/embed/P_J_6r_L_pI\"}
+    "Treble Mesh": {
+        "desc": "Creates a grid of open squares.", 
+        "abbr_uk": "tr, ch1, sk1", 
+        "abbr_us": "dc, ch1, sk1", 
+        "video": "https://www.youtube.com/embed/9g0s3qTqj1g"
+    },
+    "Granite Stitch": {
+        "desc": "Also known as Moss Stitch. Dense, woven texture.", 
+        "abbr_uk": "dc, ch1, sk1", 
+        "abbr_us": "sc, ch1, sk1", 
+        "video": "https://www.youtube.com/embed/gUa6tLpZsio"
+    },
+    "Double Crochet": {
+        "desc": "Standard solid fabric.", 
+        "abbr_uk": "tr", 
+        "abbr_us": "dc", 
+        "video": "https://www.youtube.com/embed/5wTgbdMs-bg"
+    },
+    "Granny Cluster": {
+        "desc": "Classic 3-stitch groups.", 
+        "abbr_uk": "3tr group", 
+        "abbr_us": "3dc group", 
+        "video": "https://www.youtube.com/embed/P_J_6r_L_pI"
     }
-    PRESETS = {
+}
+
+PRESETS = {
     "Custom": {},
-        "Classic Shawl": {\"shape\": \"Square\", \"size\": 100, \"neck\": 15, \"stitch\": \"Treble Mesh\"},
-        "Baby Blanket": {\"shape\": \"Rectangle\", \"size\": 80, \"neck\": 0, \"stitch\": \"Granite Stitch\"},
-        "Coaster": {\"shape\": \"Circle\", \"size\": 10, \"neck\": 0, \"stitch\": \"Granny Cluster\"}
-        }
+    "Classic Shawl": {"shape": "Square", "size": 100, "neck": 15, "stitch": "Treble Mesh"},
+    "Baby Blanket": {"shape": "Rectangle", "size": 80, "neck": 0, "stitch": "Granite Stitch"},
+    "Coaster": {"shape": "Circle", "size": 10, "neck": 0, "stitch": "Granny Cluster"}
+}
+
                          
 # --- SIDEBAR ---
 st.sidebar.title("🧶 Crochet Architect")
