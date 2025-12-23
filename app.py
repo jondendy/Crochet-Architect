@@ -64,34 +64,38 @@ st.markdown("""
 # --- DATABASE: STITCH LIBRARY WITH HYPERLINKS ---
 STITCH_DATABASE = {
     "Treble Mesh": {
-        "desc": "Creates a grid of open squares.",
+        "desc": "Creates a grid of open squares. Ideal for airy shawls and wraps.",
         "abbr_uk": "tr, ch1, sk1",
         "abbr_us": "dc, ch1, sk1",
         "video": "https://www.youtube.com/results?search_query=filet+mesh+stitch+beginner",
+        "tutorial_name": "Filet / Mesh Stitch (Beginner)",
         "difficulty": "Beginner",
         "drape": "Airy"
     },
     "Granite Stitch": {
-        "desc": "Also known as Moss Stitch. Dense, woven texture.",
+        "desc": "Also known as Moss Stitch or Linen Stitch. Dense, woven texture.",
         "abbr_uk": "dc, ch1, sk1",
         "abbr_us": "sc, ch1, sk1",
         "video": "https://www.youtube.com/results?search_query=granite+stitch+moss+stitch+beginner",
+        "tutorial_name": "Granite / Moss Stitch (Beginner)",
         "difficulty": "Beginner",
         "drape": "Structured"
     },
     "Double Crochet": {
-        "desc": "Standard solid fabric.",
+        "desc": "Standard solid fabric. Very common in blankets and garments.",
         "abbr_uk": "tr",
         "abbr_us": "dc",
         "video": "https://www.youtube.com/results?search_query=double+crochet+stitch+beginner",
+        "tutorial_name": "Double Crochet Stitch (Beginner)",
         "difficulty": "Beginner",
         "drape": "Medium"
     },
     "Granny Cluster": {
-        "desc": "Classic 3-stitch groups.",
+        "desc": "Classic 3-stitch groups, used in traditional granny squares.",
         "abbr_uk": "3tr group",
         "abbr_us": "3dc group",
         "video": "https://www.youtube.com/results?search_query=granny+cluster+stitch+beginner",
+        "tutorial_name": "Granny Cluster Stitch (Beginner)",
         "difficulty": "Intermediate",
         "drape": "Medium"
     }
