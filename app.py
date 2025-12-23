@@ -170,6 +170,16 @@ PRESETS = {
 }
 
 # --- SIDEBAR CONFIGURATION ---
+
+# NEW: Experience Level Toggle
+experience_level = st.sidebar.radio(
+    "Experience Level",
+    ["Experienced", "Beginner"],
+    help="'Beginner' mode will add detailed explanations for core crochet terms within the pattern."
+)
+
+st.sidebar.markdown("---")
+measurement_system = st.sidebar.radio("Measurement System", ["Metric (cm)", "Imperial (inches)"])
 st.sidebar.title("🧶 Crochet Architect")
 st.sidebar.markdown("---")
 st.sidebar.info(
@@ -179,8 +189,6 @@ st.sidebar.info(
     "- Learn stitch techniques\n\n"
     "[GitHub](https://github.com) | [About](#)"
 )
-st.sidebar.markdown("---")
-measurement_system = st.sidebar.radio("Measurement System", ["Metric (cm)", "Imperial (inches)"])
 
 # --- MAIN CONTENT TABS ---
 tab1, tab2, tab3 = st.tabs(["📝 Pattern Generator", "🖼️ Image to Chart", "📚 Stitch Library"])
