@@ -5,6 +5,7 @@ import io
 
 import streamlit as st
 import hmac
+import matplotlib.pyplot as plt
 
 # --- PASSWORD PROTECTION ---
 def check_password():
@@ -63,40 +64,28 @@ st.markdown("""
 # --- DATABASE: STITCH LIBRARY WITH HYPERLINKS ---
 STITCH_DATABASE = {
     "Treble Mesh": {
-        "desc": "Creates a grid of open squares. Ideal for summer shawls and lacy garments.",
+        "desc": "Creates a grid of open squares.",
         "abbr_uk": "tr, ch1, sk1",
         "abbr_us": "dc, ch1, sk1",
-        "video": "https://www.youtube.com/embed/9g0s3qTqj1g",
-        "tutorial_name": "Filet Mesh Tutorial",
-        "difficulty": "Beginner",
-        "drape": "Airy"
+        "video": "https://www.youtube.com/results?search_query=filet+mesh+stitch+beginner"
     },
     "Granite Stitch": {
-        "desc": "Also known as Moss Stitch. Dense, woven texture with excellent drape.",
+        "desc": "Also known as Moss Stitch. Dense, woven texture.",
         "abbr_uk": "dc, ch1, sk1",
         "abbr_us": "sc, ch1, sk1",
-        "video": "https://www.youtube.com/embed/gUa6tLpZsio",
-        "tutorial_name": "Moss Stitch Tutorial",
-        "difficulty": "Beginner",
-        "drape": "Structured"
+        "video": "https://www.youtube.com/results?search_query=granite+stitch+moss+stitch+beginner"
     },
     "Double Crochet": {
-        "desc": "Standard solid fabric. Fast to work up, versatile for most projects.",
+        "desc": "Standard solid fabric.",
         "abbr_uk": "tr",
         "abbr_us": "dc",
-        "video": "https://www.youtube.com/embed/5wTgbdMs-bg",
-        "tutorial_name": "Double Crochet Basics",
-        "difficulty": "Beginner",
-        "drape": "Medium"
+        "video": "https://www.youtube.com/results?search_query=double+crochet+stitch+beginner"
     },
     "Granny Cluster": {
-        "desc": "Classic 3-stitch groups. Used in traditional granny squares.",
+        "desc": "Classic 3-stitch groups.",
         "abbr_uk": "3tr group",
         "abbr_us": "3dc group",
-        "video": "https://www.youtube.com/embed/P_J_6r_L_pI",
-        "tutorial_name": "Granny Cluster Tutorial",
-        "difficulty": "Intermediate",
-        "drape": "Medium"
+        "video": "https://www.youtube.com/results?search_query=granny+cluster+stitch+beginner"
     },
     "Shell Stitch": {
         "desc": "Creates beautiful fan-like shells. Great for edges and texture.",
@@ -168,6 +157,54 @@ PRESETS = {
         "description": "Small triangular shawl with shell edge."
     }
 }
+
+def draw_shape_outline(shape: str, size: float = 10):
+    """Return a Matplotlib figure showing the overall project shape."""
+    fig, ax = plt.subplots(figsize=(3, 3))
+    ax.set_aspect("equal")
+    ax.axis("off")
+
+    if shape == "Square":
+        ax.add_patch(plt.Rectangle((-1, -1), 2, 2, fill=False, linewidth=3, color="purple"))
+    elif shape == "Rectangle":
+        ax.add_patch(plt.Rectangle((-1.5, -1), 3, 2, fill=False, linewidth=3, color="purple"))
+    elif shape == "Circle":
+        ax.add_patch(plt.Circle((0, 0), 1, fill=False, linewidth=3, color="purple"))
+    elif shape == "Triangle":
+        ax.plot([0, -1, 1, 0], [1, -1, -1, 1], color="purple", linewidth=3)
+    else:
+        ax.add_patch(plt.Rectangle((-1, -1), 2, 2, fill=False, linewidth=3, color="purple"))
+
+    ax.set_title(f"{shape} outline", fontsize=10)
+    return fig
+
+
+def draw_stitch_texture(stitch_name: str):
+    """Return a Matplotlib figure approximating the stitch texture as a small grid."""
+    fig, ax = plt.subplots(figsize=(3, 3))
+    ax.set_aspect("equal")
+    ax.axis("off")
+
+    # Small grid
+    rows, cols = 8, 8
+
+    if "Mesh" in stitch_name:  # Treble Mesh / Filet Mesh
+        grid = np.zeros((rows, cols))
+        grid[::2, ::2] = 1  # spaced holes
+    elif "Granite" in stitch_name or "Moss" in stitch_name:
+        grid = np.ones((rows, cols)) * 0.6
+        grid[::2, 1::2] = 0.9  # woven look
+    elif "Granny" in stitch_name:
+        grid = np.zeros((rows, cols))
+        for r in range(0, rows, 4):
+            for c in range(0, cols, 4):
+                grid[r:r+3, c:c+3] = 0.8  # 3-stitch clusters
+    else:  # Double Crochet or default
+        grid = np.ones((rows, cols)) * 0.8  # solid
+
+    ax.imshow(grid, cmap="Purples")
+    ax.set_title(f"{stitch_name} texture", fontsize=10)
+    return fig
 
 # --- SIDEBAR CONFIGURATION ---
 
@@ -279,6 +316,21 @@ with tab1:
                 
                 # Build Pattern Text
                 pattern_text = f"""# {shape} {stitch_key} Pattern
+
+# Visual panels under the pattern
+st.markdown("### Visual preview")
+
+viz_col1, viz_col2 = st.columns(2)
+
+with viz_col1:
+    st.caption("Project outline (not to scale)")
+    fig_outline = draw_shape_outline(shape)
+    st.pyplot(fig_outline)
+
+with viz_col2:
+    st.caption("Stitch texture (schematic only)")
+    fig_stitch = draw_stitch_texture(stitch_key)
+    st.pyplot(fig_stitch)
 
 ## Project Summary
 - **Shape:** {shape}
