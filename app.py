@@ -67,60 +67,32 @@ STITCH_DATABASE = {
         "desc": "Creates a grid of open squares.",
         "abbr_uk": "tr, ch1, sk1",
         "abbr_us": "dc, ch1, sk1",
-        "video": "https://www.youtube.com/results?search_query=filet+mesh+stitch+beginner"
+        "video": "https://www.youtube.com/results?search_query=filet+mesh+stitch+beginner",
+        "difficulty": "Beginner",
+        "drape": "Airy"
     },
     "Granite Stitch": {
         "desc": "Also known as Moss Stitch. Dense, woven texture.",
         "abbr_uk": "dc, ch1, sk1",
         "abbr_us": "sc, ch1, sk1",
-        "video": "https://www.youtube.com/results?search_query=granite+stitch+moss+stitch+beginner"
+        "video": "https://www.youtube.com/results?search_query=granite+stitch+moss+stitch+beginner",
+        "difficulty": "Beginner",
+        "drape": "Structured"
     },
     "Double Crochet": {
         "desc": "Standard solid fabric.",
         "abbr_uk": "tr",
         "abbr_us": "dc",
-        "video": "https://www.youtube.com/results?search_query=double+crochet+stitch+beginner"
+        "video": "https://www.youtube.com/results?search_query=double+crochet+stitch+beginner",
+        "difficulty": "Beginner",
+        "drape": "Medium"
     },
     "Granny Cluster": {
         "desc": "Classic 3-stitch groups.",
         "abbr_uk": "3tr group",
         "abbr_us": "3dc group",
-        "video": "https://www.youtube.com/results?search_query=granny+cluster+stitch+beginner"
-    },
-    "Shell Stitch": {
-        "desc": "Creates beautiful fan-like shells. Great for edges and texture.",
-        "abbr_uk": "5tr shell",
-        "abbr_us": "5dc shell",
-        "video": "https://www.youtube.com/embed/7lM8y2xPz-c",
-        "tutorial_name": "Shell Stitch Guide",
+        "video": "https://www.youtube.com/results?search_query=granny+cluster+stitch+beginner",
         "difficulty": "Intermediate",
-        "drape": "Airy"
-    },
-    "Popcorn Stitch": {
-        "desc": "Dimensional bobbles. Perfect for textured amigurumi and toys.",
-        "abbr_uk": "popcorn",
-        "abbr_us": "popcorn",
-        "video": "https://www.youtube.com/embed/1vKvqm76F-Q",
-        "tutorial_name": "Popcorn Stitch Tutorial",
-        "difficulty": "Advanced",
-        "drape": "Dimensional"
-    },
-    "Linen Stitch": {
-        "desc": "Creates a gridded, linen-like texture. Great for structured garments.",
-        "abbr_uk": "dc, ch1",
-        "abbr_us": "dc, ch1",
-        "video": "https://www.youtube.com/embed/cCWnJEpwPLw",
-        "tutorial_name": "Linen Stitch Guide",
-        "difficulty": "Beginner",
-        "drape": "Structured"
-    },
-    "Half Double Crochet": {
-        "desc": "Medium height stitch. Versatile and works quickly.",
-        "abbr_uk": "htr",
-        "abbr_us": "hdc",
-        "video": "https://www.youtube.com/embed/FGoTHr20xGE",
-        "tutorial_name": "Half Double Crochet Basics",
-        "difficulty": "Beginner",
         "drape": "Medium"
     }
 }
