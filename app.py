@@ -368,42 +368,42 @@ Work the following colors in striped rounds:
         # Visual panels under the pattern
         st.markdown("### Visual preview")
 
-            viz_col1, viz_col2 = st.columns(2)
+        viz_col1, viz_col2 = st.columns(2)
 
-            with viz_col1:
-                st.caption("Project outline (not to scale)")
-                fig_outline = draw_shape_outline(shape)
-                st.pyplot(fig_outline)
+        with viz_col1:
+            st.caption("Project outline (not to scale)")
+            fig_outline = draw_shape_outline(shape)
+            st.pyplot(fig_outline)
 
-            with viz_col2:
-                st.caption("Stitch texture (schematic only)")
-                fig_stitch = draw_stitch_texture(stitch_key)
-                st.pyplot(fig_stitch)
+        with viz_col2:
+            st.caption("Stitch texture (schematic only)")
+            fig_stitch = draw_stitch_texture(stitch_key)
+            st.pyplot(fig_stitch)
 
             
-            # Download Button
-            col_down1, col_down2 = st.columns(2)
-            with col_down1:
-                st.download_button(
-                    label="📥 Download as Text",
-                    data=st.session_state['pattern_content'],
-                    file_name=f"crochet_pattern_{shape.lower()}.txt",
-                    mime="text/plain",
-                    use_container_width=True
-                )
-            with col_down2:
-                st.download_button(
-                    label="📥 Download as Markdown",
-                    data=st.session_state['pattern_content'],
-                    file_name=f"crochet_pattern_{shape.lower()}.md",
-                    mime="text/markdown",
-                    use_container_width=True
-                )
+        # Download Button
+        col_down1, col_down2 = st.columns(2)
+        with col_down1:
+            st.download_button(
+                label="📥 Download as Text",
+                data=st.session_state['pattern_content'],
+                file_name=f"crochet_pattern_{shape.lower()}.txt",
+                mime="text/plain",
+                use_container_width=True
+            )
+        with col_down2:
+            st.download_button(
+                label="📥 Download as Markdown",
+                data=st.session_state['pattern_content'],
+                file_name=f"crochet_pattern_{shape.lower()}.md",
+                mime="text/markdown",
+                use_container_width=True
+            )
             
-            # Video Tutorial
-            st.markdown("---")
-            st.subheader(f"🎥 Learn {stitch_key}")
-            st.video(stitch_info['video'].replace('/embed/', '/watch?v='))
+        # Video Tutorial
+        st.markdown("---")
+        st.subheader(f"🎥 Learn {stitch_key}")
+        st.video(stitch_info['video'].replace('/embed/', '/watch?v='))
 
 # ==========================================
 # TAB 2: IMAGE TO CHART
