@@ -280,18 +280,17 @@ with tab1:
         generate_btn = st.button("🎯 Generate Pattern", type="primary", use_container_width=True)
     
     # Pattern Output
-    with col2:
-        if generate_btn:
-            st.session_state['generated_pattern'] = True
-            
-            with st.spinner("Generating your pattern..."):
-                # Calculate pattern metrics
-                unit_abbr = '"' if "Imperial" in measurement_system else "cm"
-                size_per_color = int(size / colors) if colors > 0 else size
-                est_rounds = int((size - neck) / 2.5) if neck > 0 else int(size / 2.5)
-                
-                # Build Pattern Text
-pattern_text = f"""# {shape} {stitch_key} Pattern
+    with col2:if generate_btn:
+    st.session_state['generated_pattern'] = True
+
+    with st.spinner("Generating your pattern..."):
+        # Calculate pattern metrics
+        unit_abbr = '"' if "Imperial" in measurement_system else "cm"
+        size_per_color = int(size / colors) if colors > 0 else size
+        est_rounds = int((size - neck) / 2.5) if neck > 0 else int(size / 2.5)
+
+        # Build Pattern Text
+        pattern_text = f"""# {shape} {stitch_key} Pattern
 
 ## Project Summary
 - **Shape:** {shape}
@@ -329,15 +328,17 @@ pattern_text = f"""# {shape} {stitch_key} Pattern
 ### Body (Work in Rounds)
 - **Rounds 1-{est_rounds}:** Continue working {stitch_key} in rounds
 - **Increases:** Place increases at {4 if shape == "Square" else 3} evenly spaced points per round (for even expansion)
-- **Row Height:** Approximately 2-3{unit_abbr} per round (adjust based on your gauge)
+- **Row Height:** Approximately 2–3{unit_abbr} per round (adjust based on your gauge)
 
 ### Color Pattern
 Work the following colors in striped rounds:
 """
-                for i in range(colors):
-                    pattern_text += f"\n- **Color {i+1}:** Rounds {i*size_per_color//2}-{(i+1)*size_per_color//2}"
-                
-                pattern_text += f"""
+
+        # this loop MUST be indented under the spinner
+        for i in range(colors):
+            pattern_text += f"\n- **Color {i+1}:** Rounds {i*size_per_color//2}-{(i+1)*size_per_color//2}"
+
+        pattern_text += f"""
 
 ### Finishing
 1. Cut yarn leaving 6{unit_abbr} tail
@@ -351,9 +352,10 @@ Work the following colors in striped rounds:
 - Always swatch first!
 
 ---
-**[Watch {stitch_info['tutorial_name']} →]({stitch_info['video'].replace('/embed/', '/watch?v=')})**
+**[Watch {stitch_info['tutorial_name']} →]({stitch_info['video']})**
 """
-    st.session_state['pattern_content'] = pattern_text
+        st.session_state['pattern_content'] = pattern_text
+
         
     # Display Generated Pattern
     if 'generated_pattern' in st.session_state and st.session_state['generated_pattern']:
