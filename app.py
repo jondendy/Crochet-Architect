@@ -280,7 +280,8 @@ with tab1:
         generate_btn = st.button("🎯 Generate Pattern", type="primary", use_container_width=True)
     
     # Pattern Output
-    with col2:if generate_btn:
+    with col2:
+if generate_btn:
     st.session_state['generated_pattern'] = True
 
     with st.spinner("Generating your pattern..."):
