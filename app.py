@@ -291,22 +291,7 @@ with tab1:
                 est_rounds = int((size - neck) / 2.5) if neck > 0 else int(size / 2.5)
                 
                 # Build Pattern Text
-                pattern_text = f"""# {shape} {stitch_key} Pattern
-
-# Visual panels under the pattern
-st.markdown("### Visual preview")
-
-viz_col1, viz_col2 = st.columns(2)
-
-with viz_col1:
-    st.caption("Project outline (not to scale)")
-    fig_outline = draw_shape_outline(shape)
-    st.pyplot(fig_outline)
-
-with viz_col2:
-    st.caption("Stitch texture (schematic only)")
-    fig_stitch = draw_stitch_texture(stitch_key)
-    st.pyplot(fig_stitch)
+pattern_text = f"""# {shape} {stitch_key} Pattern
 
 ## Project Summary
 - **Shape:** {shape}
@@ -368,12 +353,27 @@ Work the following colors in striped rounds:
 ---
 **[Watch {stitch_info['tutorial_name']} →]({stitch_info['video'].replace('/embed/', '/watch?v=')})**
 """
-                
-                st.session_state['pattern_content'] = pattern_text
+    st.session_state['pattern_content'] = pattern_text
         
-        # Display Generated Pattern
-        if 'generated_pattern' in st.session_state and st.session_state['generated_pattern']:
-            st.markdown(st.session_state['pattern_content'])
+    # Display Generated Pattern
+    if 'generated_pattern' in st.session_state and st.session_state['generated_pattern']:
+        st.markdown(st.session_state['pattern_content'])
+
+        # Visual panels under the pattern
+        st.markdown("### Visual preview")
+
+            viz_col1, viz_col2 = st.columns(2)
+
+            with viz_col1:
+                st.caption("Project outline (not to scale)")
+                fig_outline = draw_shape_outline(shape)
+                st.pyplot(fig_outline)
+
+            with viz_col2:
+                st.caption("Stitch texture (schematic only)")
+                fig_stitch = draw_stitch_texture(stitch_key)
+                st.pyplot(fig_stitch)
+
             
             # Download Button
             col_down1, col_down2 = st.columns(2)
