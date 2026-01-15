@@ -237,6 +237,20 @@ PRESETS = {
         "neck": 0,
         "stitch": "V-Stitch",
         "description": "Five-pointed star doily with open lacework."
+    },
+    "Winter Beanie": {
+        "shape": "Hat",
+        "hat_circumference": 56,
+        "hat_height": 20,
+        "stitch": "Half Double Crochet",
+        "description": "Warm adult beanie with ribbed band."
+    },
+    "Fingerless Gloves": {
+        "shape": "Glove",
+        "glove_width": 20,
+        "hand_length": 18,
+        "stitch": "Single Crochet",
+        "description": "Cozy fingerless mitts with thumb opening."
     }
 }
 
@@ -261,6 +275,22 @@ def draw_shape_outline(shape: str, size: float = 10):
         x = radii * np.cos(angles - np.pi/2)
         y = radii * np.sin(angles - np.pi/2)
         ax.plot(x, y, color="purple", linewidth=3)
+    elif shape == "Hat":
+        # Draw hat outline (dome with brim)
+        theta = np.linspace(0, np.pi, 50)
+        x = np.cos(theta)
+        y = np.sin(theta)
+        ax.plot(x, y, color="purple", linewidth=3)  # dome
+        ax.plot([-1.2, -1, 1, 1.2], [0, 0, 0, 0], color="purple", linewidth=3)  # brim
+        ax.plot([-1, -1], [0, -0.2], color="purple", linewidth=3)  # left side
+        ax.plot([1, 1], [0, -0.2], color="purple", linewidth=3)  # right side
+    elif shape == "Glove":
+        # Draw glove outline (mitt shape)
+        ax.plot([0, 0, 0.5, 0.5, 0.3, 0.3, 0, -0.3, -0.3, -0.5, -0.5, 0], 
+                [1, 0.3, 0.3, 0.5, 0.5, 0.8, 0.8, 0.8, 0.5, 0.5, 0.3, 0.3], 
+                color="purple", linewidth=3)
+        # Wrist opening
+        ax.plot([-0.5, 0.5], [0.3, 0.3], color="purple", linewidth=2, linestyle='--')
     else:
         ax.add_patch(plt.Rectangle((-1, -1), 2, 2, fill=False, linewidth=3, color="purple"))
 
@@ -358,18 +388,65 @@ with tab1:
         # Input Fields
         shape = st.selectbox(
             "Shape",
-            ["Square", "Rectangle", "Circle", "Triangle", "Star"],
-            index=0 if "shape" not in defaults else ["Square", "Rectangle", "Circle", "Triangle", "Star"].index(defaults.get("shape", "Square"))
+            ["Square", "Rectangle", "Circle", "Triangle", "Star", "Hat", "Glove"],
+            index=0 if "shape" not in defaults else ["Square", "Rectangle", "Circle", "Triangle", "Star", "Hat", "Glove"].index(defaults.get("shape", "Square"))
         )
         
         unit = " inches" if "Imperial" in measurement_system else " cm"
-        size = st.number_input(
-            f"Final Size ({unit.strip()})",
-            value=defaults.get("size", 100),
-            min_value=5,
-            step=5,
-            help="Width of the final piece."
-        )
+        
+        # Shape-specific measurements
+        if shape == "Hat":
+            hat_circumference = st.number_input(
+                f"Head Circumference ({unit.strip()})",
+                value=defaults.get("hat_circumference", 56),
+                min_value=35,
+                max_value=70,
+                step=1,
+                help="Measure around the widest part of the head. Average adult: 56-58cm (22-23 inches)."
+            )
+            hat_height = st.number_input(
+                f"Hat Height ({unit.strip()})",
+                value=defaults.get("hat_height", 20),
+                min_value=15,
+                max_value=35,
+                step=1,
+                help="From brim to crown. Beanie: 20-23cm, slouchy: 28-32cm."
+            )
+            size = hat_circumference  # For calculations
+        elif shape == "Glove":
+            glove_width = st.number_input(
+                f"Hand Width ({unit.strip()})",
+                value=defaults.get("glove_width", 20),
+                min_value=15,
+                max_value=30,
+                step=1,
+                help="Measure around the widest part of palm, excluding thumb."
+            )
+            hand_length = st.number_input(
+                f"Hand Length ({unit.strip()})",
+                value=defaults.get("hand_length", 18),
+                min_value=10,
+                max_value=30,
+                step=1,
+                help="From wrist to base of fingers."
+            )
+            arm_length = st.number_input(
+                f"Arm Coverage ({unit.strip()})",
+                value=0,
+                min_value=0,
+                max_value=40,
+                step=1,
+                help="Extra length up the arm (0 for wrist-length, 10-15cm for arm warmers)."
+            )
+            size = glove_width  # For calculations
+        else:
+            size = st.number_input(
+                f"Final Size ({unit.strip()})",
+                value=defaults.get("size", 100),
+                min_value=5,
+                step=5,
+                help="Width of the final piece."
+            )
         
         # Star-specific options
         if shape == "Star":
@@ -381,13 +458,17 @@ with tab1:
                 help="Classic stars have 5 points, but you can create 6-8 pointed stars too."
             )
         
-        neck = st.number_input(
-            f"Neck/Center Opening ({unit.strip()})",
-            value=defaults.get("neck", 15),
-            min_value=0,
-            step=1,
-            help="Leave at 0 for blankets/squares without opening. For stars, this is the center circle size."
-        )
+        # Neck/opening (not for hats/gloves)
+        if shape not in ["Hat", "Glove"]:
+            neck = st.number_input(
+                f"Neck/Center Opening ({unit.strip()})",
+                value=defaults.get("neck", 15),
+                min_value=0,
+                step=1,
+                help="Leave at 0 for blankets/squares without opening. For stars, this is the center circle size."
+            )
+        else:
+            neck = 0
         
         colors = st.slider(
             "Number of Colors",
@@ -425,10 +506,12 @@ with tab1:
                 size_per_color = int(size / colors) if colors > 0 else size
                 est_rounds = int((size - neck) / 2.5) if neck > 0 else int(size / 2.5)
 
-                # Star-specific calculations
+                # Shape-specific instructions
+                shape_instructions = ""
+                
                 if shape == "Star":
                     points_value = points if 'points' in locals() else 5
-                    star_instructions = f"""
+                    shape_instructions = f"""
 ### Star-Specific Instructions
 **Number of Points:** {points_value}
 
@@ -442,16 +525,88 @@ with tab1:
    - Outer tips: Add 2-3 stitches per round at tip for sharp points
 5. **Finishing Points:** Work 1 round of single crochet around entire star edge
 """
+                elif shape == "Hat":
+                    starting_stitches = int(hat_circumference * 0.8)  # Account for stretch
+                    crown_rounds = int(hat_height * 0.4)
+                    straight_rounds = int(hat_height * 0.6 / 2)
+                    shape_instructions = f"""
+### Hat-Specific Instructions
+**Head Circumference:** {hat_circumference}{unit_abbr}
+**Hat Height:** {hat_height}{unit_abbr}
+**Starting Stitches:** ~{starting_stitches} stitches
+
+#### Ribbed Band (Optional)
+1. **Ch {int(hat_height * 0.2)}**, work in rows of {stitch_key} for {starting_stitches} rows
+2. Join the short ends to form a tube, rotate 90° to work into row edges
+3. Work 1 round of sc evenly around top edge (~{starting_stitches} stitches)
+
+#### Crown Shaping (Top-Down Method)
+1. **Magic ring:** ch 3, work {12} {stitch_key} into ring, join
+2. **Increase rounds:** Work {crown_rounds} rounds, increasing {6} stitches per round
+   - Round pattern: *{stitch_key} in each st, 2 {stitch_key} in next st*, repeat around
+3. **Straight section:** Work {straight_rounds} rounds even (no increases)
+4. **Ribbed brim:** Switch to smaller hook, work {int(hat_height * 0.15)}{unit_abbr} in ribbing or sc
+
+#### Sizing Check
+- After crown: circumference should be ~{hat_circumference}{unit_abbr}
+- Total height: {hat_height}{unit_abbr} from crown to brim
+"""
+                elif shape == "Glove":
+                    hand_stitches = int(glove_width * 0.9)  # Account for stretch
+                    hand_rounds = int(hand_length / 2)
+                    arm_rounds = int(arm_length / 2) if 'arm_length' in locals() else 0
+                    shape_instructions = f"""
+### Glove-Specific Instructions
+**Hand Width:** {glove_width}{unit_abbr}
+**Hand Length:** {hand_length}{unit_abbr}
+**Arm Coverage:** {arm_length if 'arm_length' in locals() else 0}{unit_abbr}
+**Starting Stitches:** ~{hand_stitches} stitches
+
+#### Cuff
+1. **Ch {hand_stitches}**, join with sl st to form ring (or work flat and seam)
+2. **Ribbing:** Work {4} rounds of BPdc, FPdc alternating (or sc in BLO)
+3. **Wrist:** Work {arm_rounds} rounds even in {stitch_key}
+
+#### Hand Section
+1. **Hand body:** Work {hand_rounds} rounds even
+2. **Thumb opening:** 
+   - Round {int(hand_rounds * 0.6)}: Ch {8}, skip {8} stitches, continue around
+   - This creates thumb hole on side of glove
+
+#### Thumb (Optional)
+1. Join yarn at thumb opening
+2. Work {8} sc around opening
+3. Work {6} rounds even in sc
+4. **Decrease round:** *sc {2} tog* around, fasten off
+
+#### Fingerless Variation
+- Omit thumb decreases
+- Work hand to desired length (usually to mid-finger)
+- Final round: sc around for neat edge
+
+#### Measurements
+- Wrist to thumb: {int(hand_length * 0.6)}{unit_abbr}
+- Thumb to fingertips: {int(hand_length * 0.4)}{unit_abbr}
+- Total length (with arm): {hand_length + (arm_length if 'arm_length' in locals() else 0)}{unit_abbr}
+"""
+
+                # Dimension label
+                if shape == "Hat":
+                    dimensions = f"{hat_circumference}{unit_abbr} circumference × {hat_height}{unit_abbr} height"
+                elif shape == "Glove":
+                    dimensions = f"{glove_width}{unit_abbr} width × {hand_length}{unit_abbr} hand length"
+                elif shape == "Star":
+                    dimensions = f"{size}{unit_abbr} point-to-point"
                 else:
-                    star_instructions = ""
+                    dimensions = f"{size}{unit_abbr} width"
 
                 # Build Pattern Text
                 pattern_text = f"""# {shape} {stitch_key} Pattern
 
 ## Project Summary
 - **Shape:** {shape}
-- **Final Dimensions:** {size}{unit_abbr} {'point-to-point' if shape == 'Star' else 'width'}
-- **Neck/Opening:** {neck}{unit_abbr} (center {'circle' if shape == 'Star' else 'opening'})
+- **Final Dimensions:** {dimensions}
+- **{'Neck/Opening' if shape not in ['Hat', 'Glove'] else 'Features'}:** {neck if shape not in ['Hat', 'Glove'] else 'Ribbed edge, custom fit'}{unit_abbr if shape not in ['Hat', 'Glove'] else ''}
 - **Stitch:** {stitch_key}
 - **Colors:** {colors}
 
@@ -475,20 +630,16 @@ with tab1:
 | dec | Decrease |
 | FP | Front Post |
 | BP | Back Post |
+| BLO | Back Loop Only |
 
 ## Pattern Instructions
 
-### Foundation
-1. **Starting Chain:** {'Magic ring or ch 4' if shape == 'Star' else f'Create a foundation chain of approximately {int(neck * 1.5 if neck > 0 else size * 0.5)}{unit_abbr}'}
-2. **Join:** Slip stitch to form a ring (or work flat if rectangular)
-3. **Setup Round:** Work {stitch_key} stitches evenly around the ring
+{shape_instructions}
 
-{star_instructions}
-
-### Body (Work in Rounds)
-- **Rounds 1-{est_rounds}:** Continue working {stitch_key} in rounds
+{'### Body (Work in Rounds)' if shape not in ['Hat', 'Glove'] else '### Color Striping'}
+{f'''- **Rounds 1-{est_rounds}:** Continue working {stitch_key} in rounds
 - **Increases:** Place increases at {points_value if shape == 'Star' else (4 if shape == 'Square' else 3)} evenly spaced points per round (for even expansion)
-- **Row Height:** Approximately 2–3{unit_abbr} per round (adjust based on your gauge)
+- **Row Height:** Approximately 2–3{unit_abbr} per round (adjust based on your gauge)''' if shape not in ['Hat', 'Glove'] else f'''For striped {shape.lower()}, alternate colors every 2-4 rounds.'''}
 
 ### Color Pattern
 Work the following colors in striped rounds:
@@ -500,19 +651,35 @@ Work the following colors in striped rounds:
                         f"{i*size_per_color//2}-{(i+1)*size_per_color//2}"
                     )
 
+                # Finishing instructions
+                if shape == "Hat":
+                    finishing = f"""1. Weave in all ends securely
+2. **Block:** Pin over a balloon or head form to set shape
+3. Steam lightly if yarn allows
+4. Try on and adjust ribbing if needed"""
+                elif shape == "Glove":
+                    finishing = f"""1. Weave in all ends
+2. Reinforce thumb opening with extra yarn if needed
+3. **Try on:** Adjust length before fastening off
+4. Work second glove to match (mirror thumb placement if desired)"""
+                else:
+                    finishing = f"""1. Cut yarn leaving 6{unit_abbr} tail
+2. Pull through last loop
+3. Weave in all ends
+4. **Block:** {'Pin each point firmly' if shape == 'Star' else 'Wet block and pin to shape'} for best results"""
+
                 pattern_text += f"""
 
 ### Finishing
-1. Cut yarn leaving 6{unit_abbr} tail
-2. Pull through last loop
-3. Weave in all ends
-4. **Block:** {'Pin each point firmly' if shape == 'Star' else 'Wet block and pin to shape'} for best results
+{finishing}
 
 ## Gauge & Notes
 - Adjust hook size if your gauge is off
 - This pattern is a guideline—modify to fit your yarn weight
 - Always swatch first!
 {'- For stars: Use blocking wires in the points for crisp definition' if shape == 'Star' else ''}
+{'- For hats: Negative ease of 5-10% ensures good fit' if shape == 'Hat' else ''}
+{'- For gloves: Work thumb on correct side for left/right hands' if shape == 'Glove' else ''}
 
 ---
 **[Watch {stitch_info['tutorial_name']} →]({stitch_info['video']})**
@@ -765,7 +932,7 @@ with tab3:
 st.markdown("---")
 st.markdown(
     "<div style='text-align: center; color: gray; font-size: 12px;'>"
-    "<p>🧶 Crochet Architect v1.1</p>"
+    "<p>🧶 Crochet Architect v1.2</p>"
     "<p>Made with ❤️ for fiber artists</p>"
     "<p><a href='https://github.com/jondendy/Crochet-Architect'>GitHub</a></p>"
     "</div>",
