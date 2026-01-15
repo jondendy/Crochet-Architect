@@ -61,7 +61,7 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- DATABASE: STITCH LIBRARY WITH HYPERLINKS ---
+# --- EXPANDED DATABASE: STITCH LIBRARY WITH HYPERLINKS ---
 STITCH_DATABASE = {
     "Treble Mesh": {
         "desc": "Creates a grid of open squares. Ideal for airy shawls and wraps.",
@@ -98,6 +98,105 @@ STITCH_DATABASE = {
         "tutorial_name": "Granny Cluster Stitch (Beginner)",
         "difficulty": "Intermediate",
         "drape": "Medium"
+    },
+    "Shell Stitch": {
+        "desc": "Fan-shaped stitch pattern with 5-7 stitches worked into same space. Creates elegant scalloped edges.",
+        "abbr_uk": "5tr in same st",
+        "abbr_us": "5dc in same st",
+        "video": "https://www.youtube.com/results?search_query=shell+stitch+crochet+beginner",
+        "tutorial_name": "Shell Stitch (Beginner)",
+        "difficulty": "Beginner",
+        "drape": "Dimensional"
+    },
+    "V-Stitch": {
+        "desc": "Two double crochets separated by a chain, forming a 'V' shape. Quick and creates an open fabric.",
+        "abbr_uk": "(tr, ch1, tr) in same st",
+        "abbr_us": "(dc, ch1, dc) in same st",
+        "video": "https://www.youtube.com/results?search_query=v+stitch+crochet+beginner",
+        "tutorial_name": "V-Stitch (Beginner)",
+        "difficulty": "Beginner",
+        "drape": "Airy"
+    },
+    "Half Double Crochet": {
+        "desc": "Shorter than double crochet, taller than single. Creates medium-weight fabric.",
+        "abbr_uk": "htr",
+        "abbr_us": "hdc",
+        "video": "https://www.youtube.com/results?search_query=half+double+crochet+beginner",
+        "tutorial_name": "Half Double Crochet (Beginner)",
+        "difficulty": "Beginner",
+        "drape": "Medium"
+    },
+    "Single Crochet": {
+        "desc": "Tightest and shortest stitch. Creates dense, sturdy fabric perfect for amigurumi.",
+        "abbr_uk": "dc",
+        "abbr_us": "sc",
+        "video": "https://www.youtube.com/results?search_query=single+crochet+beginner",
+        "tutorial_name": "Single Crochet (Beginner)",
+        "difficulty": "Beginner",
+        "drape": "Structured"
+    },
+    "Treble Crochet": {
+        "desc": "Taller stitch creating open, drapey fabric. Works up quickly.",
+        "abbr_uk": "dtr",
+        "abbr_us": "tr",
+        "video": "https://www.youtube.com/results?search_query=treble+crochet+beginner",
+        "tutorial_name": "Treble Crochet (Beginner)",
+        "difficulty": "Intermediate",
+        "drape": "Airy"
+    },
+    "Bobble Stitch": {
+        "desc": "3-5 incomplete stitches closed together creating raised 3D texture.",
+        "abbr_uk": "5tr bobble",
+        "abbr_us": "5dc bobble",
+        "video": "https://www.youtube.com/results?search_query=bobble+stitch+crochet",
+        "tutorial_name": "Bobble Stitch (Intermediate)",
+        "difficulty": "Intermediate",
+        "drape": "Dimensional"
+    },
+    "Puff Stitch": {
+        "desc": "Multiple half-double crochets worked together creating soft, textured puffs.",
+        "abbr_uk": "3htr puff",
+        "abbr_us": "3hdc puff",
+        "video": "https://www.youtube.com/results?search_query=puff+stitch+crochet",
+        "tutorial_name": "Puff Stitch (Intermediate)",
+        "difficulty": "Intermediate",
+        "drape": "Dimensional"
+    },
+    "Popcorn Stitch": {
+        "desc": "5 stitches worked in same place, then folded and closed to create pronounced bumps.",
+        "abbr_uk": "5tr popcorn",
+        "abbr_us": "5dc popcorn",
+        "video": "https://www.youtube.com/results?search_query=popcorn+stitch+crochet",
+        "tutorial_name": "Popcorn Stitch (Intermediate)",
+        "difficulty": "Intermediate",
+        "drape": "Dimensional"
+    },
+    "Suzette Stitch": {
+        "desc": "Alternating single and double crochets creating elegant textured fabric.",
+        "abbr_uk": "dc, tr alternating",
+        "abbr_us": "sc, dc alternating",
+        "video": "https://www.youtube.com/results?search_query=suzette+stitch+crochet",
+        "tutorial_name": "Suzette Stitch (Intermediate)",
+        "difficulty": "Intermediate",
+        "drape": "Medium"
+    },
+    "Waffle Stitch": {
+        "desc": "Raised squares creating thick, textured waffle pattern. Very warm.",
+        "abbr_uk": "FPdc, BPdc",
+        "abbr_us": "FPdc, BPdc",
+        "video": "https://www.youtube.com/results?search_query=waffle+stitch+crochet",
+        "tutorial_name": "Waffle Stitch (Advanced)",
+        "difficulty": "Advanced",
+        "drape": "Structured"
+    },
+    "Catherine Wheel": {
+        "desc": "Circular motif stitch creating pinwheel effect. Stunning in multiple colors.",
+        "abbr_uk": "7tr fan, clusters",
+        "abbr_us": "7dc fan, clusters",
+        "video": "https://www.youtube.com/results?search_query=catherine+wheel+stitch+crochet",
+        "tutorial_name": "Catherine Wheel (Advanced)",
+        "difficulty": "Advanced",
+        "drape": "Dimensional"
     }
 }
 
@@ -131,6 +230,13 @@ PRESETS = {
         "neck": 0,
         "stitch": "Shell Stitch",
         "description": "Small triangular shawl with shell edge."
+    },
+    "Star Doily": {
+        "shape": "Star",
+        "size": 25,
+        "neck": 0,
+        "stitch": "V-Stitch",
+        "description": "Five-pointed star doily with open lacework."
     }
 }
 
@@ -148,6 +254,13 @@ def draw_shape_outline(shape: str, size: float = 10):
         ax.add_patch(plt.Circle((0, 0), 1, fill=False, linewidth=3, color="purple"))
     elif shape == "Triangle":
         ax.plot([0, -1, 1, 0], [1, -1, -1, 1], color="purple", linewidth=3)
+    elif shape == "Star":
+        # Draw 5-pointed star
+        angles = np.linspace(0, 2*np.pi, 11, endpoint=True)
+        radii = np.array([1, 0.4, 1, 0.4, 1, 0.4, 1, 0.4, 1, 0.4, 1])
+        x = radii * np.cos(angles - np.pi/2)
+        y = radii * np.sin(angles - np.pi/2)
+        ax.plot(x, y, color="purple", linewidth=3)
     else:
         ax.add_patch(plt.Rectangle((-1, -1), 2, 2, fill=False, linewidth=3, color="purple"))
 
@@ -175,6 +288,18 @@ def draw_stitch_texture(stitch_name: str):
         for r in range(0, rows, 4):
             for c in range(0, cols, 4):
                 grid[r:r+3, c:c+3] = 0.8  # 3-stitch clusters
+    elif "Shell" in stitch_name or "V-Stitch" in stitch_name:
+        grid = np.ones((rows, cols)) * 0.5
+        for r in range(0, rows, 2):
+            for c in range(0, cols, 3):
+                grid[r:r+2, c:c+2] = 0.9  # fan shapes
+    elif "Bobble" in stitch_name or "Popcorn" in stitch_name or "Puff" in stitch_name:
+        grid = np.ones((rows, cols)) * 0.6
+        grid[1::3, 1::3] = 1.0  # raised bumps
+    elif "Waffle" in stitch_name:
+        grid = np.ones((rows, cols)) * 0.7
+        grid[::2, ::2] = 0.9
+        grid[1::2, 1::2] = 0.9  # grid pattern
     else:  # Double Crochet or default
         grid = np.ones((rows, cols)) * 0.8  # solid
 
@@ -200,7 +325,7 @@ st.sidebar.info(
     "- Generate text patterns\n"
     "- Convert images to stitch charts\n"
     "- Learn stitch techniques\n\n"
-    "[GitHub](https://github.com) | [About](#)"
+    "[GitHub](https://github.com/jondendy/Crochet-Architect)"
 )
 
 # --- MAIN CONTENT TABS ---
@@ -233,8 +358,8 @@ with tab1:
         # Input Fields
         shape = st.selectbox(
             "Shape",
-            ["Square", "Rectangle", "Circle", "Triangle"],
-            index=0 if "shape" not in defaults else ["Square", "Rectangle", "Circle", "Triangle"].index(defaults.get("shape", "Square"))
+            ["Square", "Rectangle", "Circle", "Triangle", "Star"],
+            index=0 if "shape" not in defaults else ["Square", "Rectangle", "Circle", "Triangle", "Star"].index(defaults.get("shape", "Square"))
         )
         
         unit = " inches" if "Imperial" in measurement_system else " cm"
@@ -246,12 +371,22 @@ with tab1:
             help="Width of the final piece."
         )
         
+        # Star-specific options
+        if shape == "Star":
+            points = st.slider(
+                "Number of Points",
+                min_value=5,
+                max_value=8,
+                value=5,
+                help="Classic stars have 5 points, but you can create 6-8 pointed stars too."
+            )
+        
         neck = st.number_input(
             f"Neck/Center Opening ({unit.strip()})",
             value=defaults.get("neck", 15),
             min_value=0,
             step=1,
-            help="Leave at 0 for blankets/squares without opening."
+            help="Leave at 0 for blankets/squares without opening. For stars, this is the center circle size."
         )
         
         colors = st.slider(
@@ -280,23 +415,43 @@ with tab1:
         generate_btn = st.button("🎯 Generate Pattern", type="primary", use_container_width=True)
     
     # Pattern Output
-with col2:
-    if generate_btn:
-        st.session_state['generated_pattern'] = True
+    with col2:
+        if generate_btn:
+            st.session_state['generated_pattern'] = True
 
-        with st.spinner("Generating your pattern..."):
-            # Calculate pattern metrics
-            unit_abbr = '"' if "Imperial" in measurement_system else "cm"
-            size_per_color = int(size / colors) if colors > 0 else size
-            est_rounds = int((size - neck) / 2.5) if neck > 0 else int(size / 2.5)
+            with st.spinner("Generating your pattern..."):
+                # Calculate pattern metrics
+                unit_abbr = '"' if "Imperial" in measurement_system else "cm"
+                size_per_color = int(size / colors) if colors > 0 else size
+                est_rounds = int((size - neck) / 2.5) if neck > 0 else int(size / 2.5)
 
-            # Build Pattern Text
-            pattern_text = f"""# {shape} {stitch_key} Pattern
+                # Star-specific calculations
+                if shape == "Star":
+                    points_value = points if 'points' in locals() else 5
+                    star_instructions = f"""
+### Star-Specific Instructions
+**Number of Points:** {points_value}
+
+1. **Magic Ring Start:** Begin with a magic ring (or ch 4, sl st to form ring)
+2. **Foundation Round:** Work {6 if neck > 0 else 12} {stitch_key} into ring
+3. **Point Formation:** Divide stitches into {points_value} equal sections
+   - Each point = {int(est_rounds / points_value)} rounds of increases
+   - Work increases at beginning and end of each point section
+4. **Point Shaping:** 
+   - Inner curve: Work standard stitches
+   - Outer tips: Add 2-3 stitches per round at tip for sharp points
+5. **Finishing Points:** Work 1 round of single crochet around entire star edge
+"""
+                else:
+                    star_instructions = ""
+
+                # Build Pattern Text
+                pattern_text = f"""# {shape} {stitch_key} Pattern
 
 ## Project Summary
 - **Shape:** {shape}
-- **Final Dimensions:** {size}{unit_abbr} width
-- **Neck/Opening:** {neck}{unit_abbr} (if applicable)
+- **Final Dimensions:** {size}{unit_abbr} {'point-to-point' if shape == 'Star' else 'width'}
+- **Neck/Opening:** {neck}{unit_abbr} (center {'circle' if shape == 'Star' else 'opening'})
 - **Stitch:** {stitch_key}
 - **Colors:** {colors}
 
@@ -318,92 +473,96 @@ with col2:
 | sl st | Slip Stitch |
 | inc | Increase |
 | dec | Decrease |
+| FP | Front Post |
+| BP | Back Post |
 
 ## Pattern Instructions
 
 ### Foundation
-1. **Starting Chain:** Create a foundation chain of approximately {int(neck * 1.5 if neck > 0 else size * 0.5)}{unit_abbr}
+1. **Starting Chain:** {'Magic ring or ch 4' if shape == 'Star' else f'Create a foundation chain of approximately {int(neck * 1.5 if neck > 0 else size * 0.5)}{unit_abbr}'}
 2. **Join:** Slip stitch to form a ring (or work flat if rectangular)
 3. **Setup Round:** Work {stitch_key} stitches evenly around the ring
 
+{star_instructions}
+
 ### Body (Work in Rounds)
 - **Rounds 1-{est_rounds}:** Continue working {stitch_key} in rounds
-- **Increases:** Place increases at {4 if shape == "Square" else 3} evenly spaced points per round (for even expansion)
+- **Increases:** Place increases at {points_value if shape == 'Star' else (4 if shape == 'Square' else 3)} evenly spaced points per round (for even expansion)
 - **Row Height:** Approximately 2–3{unit_abbr} per round (adjust based on your gauge)
 
 ### Color Pattern
 Work the following colors in striped rounds:
 """
 
-            # this loop MUST be indented under the spinner
-            for i in range(colors):
-                pattern_text += (
-                    f"\n- **Color {i+1}:** Rounds "
-                    f"{i*size_per_color//2}-{(i+1)*size_per_color//2}"
-                )
+                for i in range(colors):
+                    pattern_text += (
+                        f"\n- **Color {i+1}:** Rounds "
+                        f"{i*size_per_color//2}-{(i+1)*size_per_color//2}"
+                    )
 
-            pattern_text += f"""
+                pattern_text += f"""
 
 ### Finishing
 1. Cut yarn leaving 6{unit_abbr} tail
 2. Pull through last loop
 3. Weave in all ends
-4. **Block:** Wet block and pin to shape for best results
+4. **Block:** {'Pin each point firmly' if shape == 'Star' else 'Wet block and pin to shape'} for best results
 
 ## Gauge & Notes
 - Adjust hook size if your gauge is off
 - This pattern is a guideline—modify to fit your yarn weight
 - Always swatch first!
+{'- For stars: Use blocking wires in the points for crisp definition' if shape == 'Star' else ''}
 
 ---
 **[Watch {stitch_info['tutorial_name']} →]({stitch_info['video']})**
 """
-            st.session_state['pattern_content'] = pattern_text
+                st.session_state['pattern_content'] = pattern_text
 
         
-    # Display Generated Pattern
-    if 'generated_pattern' in st.session_state and st.session_state['generated_pattern']:
-        st.markdown(st.session_state['pattern_content'])
+        # Display Generated Pattern
+        if 'generated_pattern' in st.session_state and st.session_state['generated_pattern']:
+            st.markdown(st.session_state['pattern_content'])
 
-        # Visual panels under the pattern
-        st.markdown("### Visual preview")
+            # Visual panels under the pattern
+            st.markdown("### Visual preview")
 
-        viz_col1, viz_col2 = st.columns(2)
+            viz_col1, viz_col2 = st.columns(2)
 
-        with viz_col1:
-            st.caption("Project outline (not to scale)")
-            fig_outline = draw_shape_outline(shape)
-            st.pyplot(fig_outline)
+            with viz_col1:
+                st.caption("Project outline (not to scale)")
+                fig_outline = draw_shape_outline(shape)
+                st.pyplot(fig_outline)
 
-        with viz_col2:
-            st.caption("Stitch texture (schematic only)")
-            fig_stitch = draw_stitch_texture(stitch_key)
-            st.pyplot(fig_stitch)
+            with viz_col2:
+                st.caption("Stitch texture (schematic only)")
+                fig_stitch = draw_stitch_texture(stitch_key)
+                st.pyplot(fig_stitch)
 
-            
-        # Download Button
-        col_down1, col_down2 = st.columns(2)
-        with col_down1:
-            st.download_button(
-                label="📥 Download as Text",
-                data=st.session_state['pattern_content'],
-                file_name=f"crochet_pattern_{shape.lower()}.txt",
-                mime="text/plain",
-                use_container_width=True
-            )
-        with col_down2:
-            st.download_button(
-                label="📥 Download as Markdown",
-                data=st.session_state['pattern_content'],
-                file_name=f"crochet_pattern_{shape.lower()}.md",
-                mime="text/markdown",
-                use_container_width=True
-            )
-            
-        # Video Tutorial
-        st.markdown("---")
-        st.subheader(f"🎥 Learn {stitch_key}")
-        st.video(stitch_info['video'].replace('/embed/', '/watch?v='))
+                
+            # Download Button
+            col_down1, col_down2 = st.columns(2)
+            with col_down1:
+                st.download_button(
+                    label="📥 Download as Text",
+                    data=st.session_state['pattern_content'],
+                    file_name=f"crochet_pattern_{shape.lower()}.txt",
+                    mime="text/plain",
+                    use_container_width=True
+                )
+            with col_down2:
+                st.download_button(
+                    label="📥 Download as Markdown",
+                    data=st.session_state['pattern_content'],
+                    file_name=f"crochet_pattern_{shape.lower()}.md",
+                    mime="text/markdown",
+                    use_container_width=True
+                )
+                
+            # Video Tutorial
+            st.markdown("---")
+            st.subheader(f"🎥 Learn {stitch_key}")
+            st.video(stitch_info['video'].replace('/embed/', '/watch?v='))
 
 # ==========================================
 # TAB 2: IMAGE TO CHART
@@ -578,7 +737,7 @@ with tab3:
                 with abbr_col2:
                     st.code(f"US: {info['abbr_us']}", language="text")
                 
-                st.markdown(f"[🎥 Watch Tutorial: {info['tutorial_name']}](https://www.youtube.com/watch?v={info['video'].split('v=')[-1]})")
+                st.markdown(f"[🎥 Watch Tutorial: {info['tutorial_name']}]({info['video']})")
             
             with col_exp2:
                 st.metric("Difficulty", info['difficulty'])
@@ -606,9 +765,9 @@ with tab3:
 st.markdown("---")
 st.markdown(
     "<div style='text-align: center; color: gray; font-size: 12px;'>"
-    "<p>🧶 Crochet Architect v1.0</p>"
+    "<p>🧶 Crochet Architect v1.1</p>"
     "<p>Made with ❤️ for fiber artists</p>"
-    "<p><a href='https://github.com'>GitHub</a> | <a href='#'>Documentation</a></p>"
+    "<p><a href='https://github.com/jondendy/Crochet-Architect'>GitHub</a></p>"
     "</div>",
     unsafe_allow_html=True
 )
